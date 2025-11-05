@@ -18,7 +18,7 @@ import rich from '../assets/images/rich.jpg';
 import nenla from '../assets/images/nenla.jpg';
 // 🔥 ERROR FIX: The build error (image_891084.png) mentioned 'victor.jpg'. 
 // It's crucial this file exists in the directory.
-import victor from '../assets/images/Victor.jpg'; 
+import victor from '../assets/images/victor.jpg'; 
 import joan from '../assets/images/joan.jpg';
 import vic from '../assets/images/vic.jpg';
 // 🔥 ERROR FIX: image_7e9f40.png shows 'smile.jpg' was added. 
