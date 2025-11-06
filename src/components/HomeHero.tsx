@@ -54,10 +54,15 @@ const HomeHero = () => {
           <a href="/about" className="bg-fuchsia-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-500 transition opacity-90 hover:opacity-100">
             LEARN MORE
           </a>
-          <a href="/join-live" 
-                className="border border-white text-white px-6 py-2 rounded-lg font-semibold transition opacity-90 hover:bg-purple-500">
-            JOIN LIVE
-          </a>
+          <a
+     href="https://chat.whatsapp.com/Dli6aJDSiMU9Z01j9IQu3E?mode=wwt"
+     target="_blank"
+     rel="noopener noreferrer"
+     className="border border-white text-white px-6 py-2 rounded-lg font-semibold transition opacity-90 hover:bg-purple-500"
+     >
+       JOIN LIVE
+     </a>
+
         </div>
       </div>
 
