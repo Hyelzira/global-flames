@@ -33,14 +33,6 @@ const assetImages = {
 };
 // --------------------------
 
-// --- PLACEHOLDER COMPONENTS ---
-const Footer: FC = () => (
-    <footer className="bg-gray-900 text-gray-400 text-center py-8 px-6 text-sm">
-        <div className="max-w-7xl mx-auto">
-            <p>© {new Date().getFullYear()} GFM Youth Community. All rights reserved.</p>
-        </div>
-    </footer>
-);
 
 
 // --- STATIC DATA FOR BLOG POSTS (UNCHANGED) ---
@@ -255,18 +247,6 @@ const BlogPage: FC = () => {
     return (
         <div className="min-h-screen bg-gray-50 font-sans text-gray-800">
 
-            {/* 1. Hero Section */}
-            <section className="bg-linear-to-r from-purple-800 to-fuchsia-900 text-white py-24 px-6 text-center">
-                <div className="max-w-4xl mx-auto">
-                    <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
-                        <span className="block text-fuchsia-300 text-lg uppercase tracking-widest mb-2">GFM Insights</span>
-                        Empowerment, Faith, and Youth Leadership
-                    </h1>
-                    <p className="text-lg md:text-xl font-light opacity-90 max-w-2xl mx-auto">
-                        Explore our latest articles, devotionals, and resources designed to guide and inspire young Christians in their journey.
-                    </p>
-                </div>
-            </section>
 
             {/* 2. Main Content Area (Featured Post, Grid, and Sidebar) */}
             <section className="py-20 px-6 max-w-7xl mx-auto">
@@ -399,8 +379,7 @@ const BlogPage: FC = () => {
             </section>
 
 
-            {/* Footer Placeholder */}
-            <Footer />
+           
         </div>
     );
 };
