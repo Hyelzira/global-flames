@@ -381,19 +381,24 @@ const TeamPage: FC = () => {
                     <p className="text-xl font-light opacity-90 mb-6 max-w-2xl mx-auto">
                         The GFM Youth Community runs on the dedication of our volunteers. If you have a passion for service, we have a team for you.
                     </p>
-                    <button 
-                        onClick={() => setIsModalOpen(true)}
-                        className="inline-flex items-center px-8 py-3 bg-fuchsia-500 text-white rounded-full font-bold text-xl 
-                                                                   hover:bg-fuchsia-400 transition-colors shadow-2xl shadow-fuchsia-500/50"
-                    >
-                        Apply to Join <HeartHandshake className="w-5 h-5 ml-3" />
-                    </button>
+                    <button
+                      onClick={() => {
+                          setIsModalOpen(true);
+                          window.open(
+                              "https://chat.whatsapp.com/KP1ADWvtvah6rJX36BF4uB?mode=wwt",
+                              "_blank"
+                          );
+                      }}
+                  className="inline-flex items-center px-8 py-3 bg-fuchsia-500 text-white rounded-full font-bold text-xl 
+                  hover:bg-fuchsia-400 transition-colors shadow-2xl shadow-fuchsia-500/50"
+                  >
+                  Apply to Join <HeartHandshake className="w-5 h-5 ml-3" />
+              </button>
+
                 </div>
             </section>
 
-            ---
-            ## 🎨 Creative & Professional Footer (New)
-            ---
+          
             <footer className="bg-gray-900 text-gray-400 py-12 px-6">
                 <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 border-b border-gray-700 pb-8">
                     
