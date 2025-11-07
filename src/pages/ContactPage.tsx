@@ -34,13 +34,13 @@ const CONTACT_INFO = [
     {
         icon: Mail,
         title: "Email Address",
-        detail: "houseofoperaworld@gmail.com",
+        detail: "globalflameyouthcommunity@gmail.com",
         link: "mailto:info@gfm-youth.org",
     },
     {
         icon: Phone,
         title: "Phone Number",
-        detail: "+234 802 642 9018",
+        detail: "+234 813 6841",
         link: "tel:+2348001234567",
     },
     {
