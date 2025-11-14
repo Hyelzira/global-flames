@@ -193,7 +193,6 @@ const ProgramModal: React.FC<ProgramModalProps> = ({ item, onClose }) => {
     };
 
     const programDetails = modalDescription[item.title as keyof typeof modalDescription];
-    // **IMPORTANT: The modal hero still uses an image source (item.icon) which no longer exists on the ProgramItem interface.**
     // **I will modify this to use the dynamic icon component as a placeholder background instead of an image.**
     const HeroIcon = IconMap[item.title as keyof typeof IconMap] || Lightbulb;
 
