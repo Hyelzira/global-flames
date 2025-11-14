@@ -14,7 +14,7 @@ const HomeCrew = () => {
   const members = [
     { name: "APT. Danjuma Musa Gaksu ", role: "FOUNDER AND PRESIDENT OF GLOBAL FLAME", image: danjumaImg },
     { name: "APT. Faith Musa Gaksu ", role: "HEAD OF DAUGHTERS OF HONOUR GLOBAL FLAME", image: faithImg },
-    { name: "Benediet Daniel", role: "UNIT HEAD GFM YOUTHS", image: benedictImg },
+    { name: "Benedict Daniel", role: "UNIT HEAD GFM YOUTHS", image: benedictImg },
     { name: "Ezekiel Isaiah", role: "ASST. UNIT HEAD GFM YOUTHS", image: isaiahImg },
     { name: "Ajik Michelle", role: "ADMIN GFM YOUTHS", image: michImg },
     { name: "Nanle Panmun", role: "ASST. ADMIN GFM YOUTH", image: panImg },
