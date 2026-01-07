@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
 // Ensure the path to your image asset is correct
 import loginImage from "../assets/images/HOO.jpg";
 
@@ -10,6 +10,9 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
+  // Initialize the navigate function
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<LoginFormData>({
     identifier: "",
     password: "",
@@ -55,9 +58,18 @@ const LoginPage: React.FC = () => {
     setLoading(true);
     try {
       console.log("Login data:", formData);
-      // Simulate API call
+      
+      // Simulate API call (e.g., waiting for server response)
       await new Promise((resolve) => setTimeout(resolve, 1500));
+
       setLoading(false);
+
+      // REDIRECTION LOGIC START
+      // After successful "login", redirect to the homepage
+      // Ensure you have a route for "/" or "/home" defined in your App.tsx
+      navigate("/home"); 
+      // REDIRECTION LOGIC END
+
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
       setLoading(false);
@@ -74,7 +86,6 @@ const LoginPage: React.FC = () => {
           alt="Login background"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        {/* Subtle overlay to soften the image */}
         <div className="absolute inset-0 bg-black/5"></div>
       </div>
 
@@ -92,7 +103,6 @@ const LoginPage: React.FC = () => {
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Error Message Display */}
             {error && (
               <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
                 {error}
@@ -131,8 +141,7 @@ const LoginPage: React.FC = () => {
                   />
                   <span>Remember me</span>
                 </label>
-                {/* FIXED: Removed size-xs typo here */}
-                <Link to="/forgot-password" className="text-xs font-bold tracking-widest text-blue-600 uppercase hover:underline">
+                <Link to="/forgot-password" size-xs className="text-xs font-bold tracking-widest text-blue-600 uppercase hover:underline">
                   Use Password Instead
                 </Link>
               </div>
@@ -149,11 +158,9 @@ const LoginPage: React.FC = () => {
             </button>
           </form>
 
-          {/* Footer Terms */}
           <div className="bg-gray-50 p-4 rounded mt-8">
             <p className="text-xs text-gray-600">
               By continuing, you agree to our{" "}
-              {/* FIXED: Changed </a> to </Link> below */}
               <Link to="/terms" className="text-blue-600 hover:underline">
                 Terms of Use
               </Link>
