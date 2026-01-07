@@ -12,9 +12,9 @@ import {
 // This allows you to dynamically select the right icon.
 const IconMap: { [key: string]: React.ElementType } = {
     // Icons from the original image (assuming these are new programs)
-    "EVERYTHING TECH": Lightbulb, // Assuming 'Tech' maps to Lightbulb or similar
-    "EVERYTHING MUSIC": Music, // Directly maps to Music
-    "GODLY DATING": Heart, // Directly maps to Heart
+    "EVERYTHING TECH": Lightbulb, 
+    "EVERYTHING MUSIC": Music, 
+    "GODLY DATING": Heart, 
     
     // Icons for the existing list of items in HomeAbout
     "EVERYTHING EDUCATION": BookOpen,
@@ -26,7 +26,6 @@ const IconMap: { [key: string]: React.ElementType } = {
 };
 
 // 3. New component to dynamically render the Lucide icon
-// The icon is passed as a prop from the IconMap
 interface ProgramIconProps {
     title: string;
     className?: string; // For Tailwind classes
@@ -46,7 +45,6 @@ const ProgramIcon: React.FC<ProgramIconProps> = ({ title, className }) => {
 // ----------------------------------------------------
 interface ProgramItem {
     title: string;
-    // icon: string; // **REMOVED: Icon is now handled by the title map**
     desc: string; // Added desc to ProgramItem for clarity
 }
 interface ProgramModalProps {
