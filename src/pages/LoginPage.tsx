@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// Ensure the path to your image asset is correct
+import loginImage from "../assets/images/HOO.jpg";
 
 interface LoginFormData {
   identifier: string; // Email or Username
@@ -37,7 +39,7 @@ const LoginPage: React.FC = () => {
       return false;
     }
 
-    if (formData.password.length < 6) {
+    if (formData.password.length < 8) {
       setError("Password must be at least 8 characters.");
       return false;
     }
@@ -48,18 +50,13 @@ const LoginPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validateForm()) return;
 
     setLoading(true);
-
     try {
-      // Example API call placeholder
       console.log("Login data:", formData);
-
-      // If login fails:
-      // throw new Error("Invalid login credentials");
-
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       setLoading(false);
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
@@ -68,61 +65,103 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+    <div className="flex min-h-screen w-full flex-col md:flex-row bg-white">
+      
+      {/* Left Side: Image Asset */}
+      <div className="relative hidden w-1/2 md:block">
+        <img
+          src={loginImage}
+          alt="Login background"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        {/* Subtle overlay to soften the image */}
+        <div className="absolute inset-0 bg-black/5"></div>
+      </div>
 
-        {/* Error Message */}
-        {error && <div className="error-message">{error}</div>}
+      {/* Right Side: Form Content */}
+      <div className="flex w-full items-center justify-center px-8 md:w-1/2 lg:px-24 py-12">
+        <div className="w-full max-w-md space-y-8">
+          
+          <div className="space-y-2">
+            <h1 className="text-4xl font-semibold tracking-tight text-gray-900">
+              Sign In
+            </h1>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Please enter your mobile number or email address and we will send you a code to log in or create an account.
+            </p>
+          </div>
 
-        {/* Email / Username */}
-        <div className="form-group">
-          <label htmlFor="identifier">Email or Username</label>
-          <input
-            type="text"
-            id="identifier"
-            name="identifier"
-            value={formData.identifier}
-            onChange={handleChange}
-            placeholder="Enter your email or username"
-          />
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            {/* Error Message Display */}
+            {error && (
+              <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded">
+                {error}
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <input
+                type="text"
+                name="identifier"
+                id="identifier"
+                value={formData.identifier}
+                onChange={handleChange}
+                placeholder="Email or Username"
+                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+              />
+              
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Password"
+                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+              />
+
+              <div className="flex items-center justify-between py-2">
+                <label className="flex items-center space-x-2 text-sm text-gray-600 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="rememberMe"
+                    checked={formData.rememberMe}
+                    onChange={handleChange}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span>Remember me</span>
+                </label>
+                {/* FIXED: Removed size-xs typo here */}
+                <Link to="/forgot-password" className="text-xs font-bold tracking-widest text-blue-600 uppercase hover:underline">
+                  Use Password Instead
+                </Link>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`inline-flex items-center justify-center rounded bg-[#5BC0DE] px-10 py-3 text-sm font-bold text-white shadow-sm transition-all uppercase hover:bg-sky-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 ${
+                loading ? "opacity-70 cursor-not-allowed" : "opacity-100"
+              }`}
+            >
+              {loading ? "Processing..." : "Next"}
+            </button>
+          </form>
+
+          {/* Footer Terms */}
+          <div className="bg-gray-50 p-4 rounded mt-8">
+            <p className="text-xs text-gray-600">
+              By continuing, you agree to our{" "}
+              {/* FIXED: Changed </a> to </Link> below */}
+              <Link to="/terms" className="text-blue-600 hover:underline">
+                Terms of Use
+              </Link>
+            </p>
+          </div>
+          
         </div>
-
-        {/* Password */}
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-          />
-        </div>
-
-        {/* Remember Me + Forgot Password */}
-        <div className="form-options">
-          <label>
-            <input
-              type="checkbox"
-              name="rememberMe"
-              checked={formData.rememberMe}
-              onChange={handleChange}
-            />
-            Remember me
-          </label>
-
-          <Link to="/forgot-password" className="forgot-link">
-            Forgot password?
-          </Link>
-        </div>
-
-        {/* Login Button */}
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };
