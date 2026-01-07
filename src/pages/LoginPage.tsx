@@ -139,7 +139,7 @@ const LoginPage: React.FC = () => {
                   <span>Remember me</span>
                 </label>
                 <Link to="/forgot-password" size-xs className="text-xs font-bold tracking-widest text-blue-600 uppercase hover:underline">
-                  Use Password Instead
+                  Use Crypted code Instead
                 </Link>
               </div>
             </div>
@@ -147,7 +147,7 @@ const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`inline-flex items-center justify-center rounded bg-[#5BC0DE] px-10 py-3 text-sm font-bold text-white shadow-sm transition-all uppercase hover:bg-sky-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 ${
+              className={`inline-flex items-center justify-center rounded bg-fuchsia-600 px-10 py-3 text-sm font-bold text-white shadow-sm transition-all uppercase hover:bg-fuchsia-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 ${
                 loading ? "opacity-70 cursor-not-allowed" : "opacity-100"
               }`}
             >

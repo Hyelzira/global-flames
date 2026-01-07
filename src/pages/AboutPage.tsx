@@ -56,7 +56,7 @@ const LEADERSHIP_TEAM: Leader[] = [
     { name: 'WAKAWA HYELZIRA', role: 'WEB DEVELOPER/TECH DIRECTOR', image: 'src/assets/images/hyelzira.jpg' },
     { name: 'AMBRUCE ISRAEL', role: 'MEDIA DIRECTOR GFM YOUTHS', image: 'src/assets/images/bruce.jpg' },
     { name: 'MAIMAKO JESSE', role: 'MUSIC/SOUND DIRECTOR GFM YOUTHS', image: 'src/assets/images/jesse.jpg' },
-    { name: 'BITRUS JOSHUA DANG', role: 'CREATIVE DESIGNER GFM YFM YOUTHS', image: 'src/assets/images/joshua.jpg' },
+    { name: 'BITRUS JOSHUA DANG', role: 'CREATIVE DESIGNER GFM YOUTHS', image: 'src/assets/images/joshua.jpg' },
     { name: 'KUBA DESMOND', role: 'POLITICAL DIRECTOR GFM YOUTHS', image: 'src/assets/images/desmond.jpg' },
 ];
 

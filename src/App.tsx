@@ -10,6 +10,7 @@ import ActivitiesPage from "./pages/ActivitiesPage";
 import TeamPage from "./pages/TeamPage";
 import JoinLivePage from "./pages/JoinLivePage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 // Simple 404 component
 function NotFoundPage() {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/team" element={<TeamPage />} />
           <Route path="/join-live" element={<JoinLivePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/Signup" element={<SignupPage />} />
           {/* 
           
           
