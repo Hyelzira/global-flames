@@ -64,10 +64,7 @@ const LoginPage: React.FC = () => {
 
       setLoading(false);
 
-      // REDIRECTION LOGIC START
-      // After successful "login", redirect to the homepage
-      // Ensure you have a route for "/" or "/home" defined in your App.tsx
-      navigate("/home"); 
+      navigate("/"); 
       // REDIRECTION LOGIC END
 
     } catch (err: any) {
