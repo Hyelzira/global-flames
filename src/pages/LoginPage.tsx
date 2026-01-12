@@ -92,7 +92,7 @@ const LoginPage: React.FC = () => {
           
           <div className="space-y-2">
             <h1 className="text-4xl font-semibold tracking-tight text-gray-900">
-              Login In
+              Login
             </h1>
             <p className="text-sm text-gray-500 leading-relaxed">
               Please enter your mobile number or email address and we will send you a code to log in or create an account.
