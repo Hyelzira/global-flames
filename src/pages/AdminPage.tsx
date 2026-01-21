@@ -99,7 +99,7 @@ const AdminPage = () => {
               <FiLock className="text-2xl text-white" />
             </div>
             <h1 className="text-white text-2xl font-bold">Secure Access</h1>
-            <p className="text-slate-500 text-sm">Enterprise Management Terminal</p>
+            <p className="text-slate-500 text-sm">Global Youth Management Terminal</p>
           </div>
           <div className="space-y-4">
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 transition-all outline-none" placeholder="Username" />
