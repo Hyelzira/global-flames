@@ -6,9 +6,9 @@ import UserPage from "./UserPage";
 
 // Mock Data for the animated chart
 const accessData = [
-  { name: 'Mon', visits: 400 }, { name: 'Tue', visits: 520 },
-  { name: 'Wed', visits: 480 }, { name: 'Thu', visits: 700 },
-  { name: 'Fri', visits: 610 }, { name: 'Sat', visits: 850 },
+  { name: 'Mon', visits: 1100 }, { name: 'Tue', visits: 520 },
+  { name: 'Wed', visits: 880 }, { name: 'Thu', visits: 700 },
+  { name: 'Fri', visits: 610 }, { name: 'Sat', visits: 900 },
   { name: 'Sun', visits: 720 },
 ];
 
@@ -50,7 +50,7 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
           <div key={user.id} onClick={() => setSelectedUser(user)} className="group cursor-pointer bg-[#161925] border border-slate-800 p-5 rounded-xl hover:border-blue-500/50 transition-all">
             <div className="flex justify-between items-start mb-3">
               <div className="p-2 bg-slate-800 rounded-lg group-hover:bg-blue-600 transition-colors">
-                <UserIcon size={16} className="text-slate-300" />
+                <UserIcon size={15} className="text-slate-300" />
               </div>
               <span className={`text-[10px] font-bold px-2 py-1 rounded ${user.role === "Admin" ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-400"}`}>
                 {user.role}
@@ -75,14 +75,14 @@ const AdminPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [, setError] = useState("");
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === "admin" && password === "admin123") {
+    if (username === "hyelzira" && password === "zira321") {
       setIsAuthenticated(true);
       setError("");
     } else {
@@ -93,18 +93,18 @@ const AdminPage = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0f111a] px-4 font-sans">
-        <form onSubmit={handleLogin} className="bg-[#161925] p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
+        <form onSubmit={handleLogin} className="bg-[#212535] p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
           <div className="flex flex-col items-center mb-8">
-            <div className="bg-blue-600 p-4 rounded-2xl mb-4 shadow-lg shadow-blue-900/20">
-              <FiLock className="text-2xl text-white" />
+            <div className="bg-blue-500 p-4 rounded-2xl mb-3 shadow-lg shadow-blue-800/20">
+              <FiLock className="text-1xl text-white" />
             </div>
-            <h1 className="text-white text-2xl font-bold">Secure Access</h1>
-            <p className="text-slate-500 text-sm">Global Youth Management Terminal</p>
+            <h1 className="text-gray-400 text-2xl font-medium">Secured Access</h1>
+            <p className="text-slate-300 text-sm">Global Youth Management Terminal</p>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-5">
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 transition-all outline-none" placeholder="Username" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 transition-all outline-none" placeholder="Password" />
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold shadow-lg shadow-blue-900/20 transition-all">Sign In</button>
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 transition-all outline-none" placeholder="Password" />
+            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-xl font-bold shadow-lg shadow-blue-900/20 transition-all">Sign In</button>
           </div>
         </form>
       </div>
@@ -118,10 +118,10 @@ const AdminPage = () => {
           <div className="space-y-8 animate-in fade-in duration-700">
             {/* Professional Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <StatCard label="Live Traffic" value="482" trend="+12%" up={true} />
-              <StatCard label="Monthly Reach" value="9,284" trend="+18%" up={true} />
-              <StatCard label="User Base" value="1,947" trend="+8%" up={true} />
-              <StatCard label="System Latency" value="36ms" trend="-3%" up={false} />
+              <StatCard label="Live Traffic" value="582" trend="+52%" up={true} />
+              <StatCard label="Monthly Reach" value="19,284" trend="+48%" up={true} />
+              <StatCard label="User Base" value="4,947" trend="+28%" up={true} />
+              <StatCard label="System Latency" value="36ms" trend="-13%" up={false} />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -183,17 +183,17 @@ const AdminPage = () => {
       {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#161925] border-r border-slate-800 p-6 transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} flex flex-col`}>
         <div className="flex items-center gap-3 mb-10">
-          <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center shadow-lg shadow-blue-900/20">
-            <ShieldCheck size={18} className="text-white" />
+          <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center shadow-lg shadow-blue-900/20">
+            <ShieldCheck size={15} className="text-white" />
           </div>
           <span className="font-bold tracking-tight text-white uppercase text-sm">Core Admin</span>
         </div>
 
         <nav className="space-y-1 flex-1">
-          <SidebarItem icon={<LayoutDashboard size={18} />} label="Overview" active={activeTab === "Dashboard"} onClick={() => {setActiveTab("Dashboard"); setIsSidebarOpen(false);}} />
-          <SidebarItem icon={<UsersIcon size={18} />} label="Directory" active={activeTab === "Users"} onClick={() => {setActiveTab("Users"); setIsSidebarOpen(false);}} />
-          <SidebarItem icon={<Database size={18} />} label="System Logs" active={activeTab === "Logs"} onClick={() => {setActiveTab("Logs"); setIsSidebarOpen(false);}} />
-          <SidebarItem icon={<Settings size={18} />} label="Settings" active={activeTab === "Settings"} onClick={() => setActiveTab("Settings")} />
+          <SidebarItem icon={<LayoutDashboard size={15} />} label="Overview" active={activeTab === "Dashboard"} onClick={() => {setActiveTab("Dashboard"); setIsSidebarOpen(false);}} />
+          <SidebarItem icon={<UsersIcon size={15} />} label="Directory" active={activeTab === "Users"} onClick={() => {setActiveTab("Users"); setIsSidebarOpen(false);}} />
+          <SidebarItem icon={<Database size={15} />} label="System Logs" active={activeTab === "Logs"} onClick={() => {setActiveTab("Logs"); setIsSidebarOpen(false);}} />
+          <SidebarItem icon={<Settings size={15} />} label="Settings" active={activeTab === "Settings"} onClick={() => setActiveTab("Settings")} />
         </nav>
 
         <button onClick={() => setIsAuthenticated(false)} className="mt-auto flex items-center gap-3 text-slate-500 hover:text-white transition-colors pb-2 px-4">
@@ -209,9 +209,9 @@ const AdminPage = () => {
             <h2 className="text-lg font-bold text-white">{activeTab}</h2>
           </div>
           <button className="lg:hidden p-2 bg-slate-800 rounded-lg" onClick={() => setIsSidebarOpen(true)}>
-            <FiMenu size={20} />
+            <FiMenu size={16} />
           </button>
-          
+          ;
           <div className="flex items-center gap-6">
             <div className="relative lg:block hidden">
               <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -221,7 +221,7 @@ const AdminPage = () => {
             <div className="flex items-center gap-3 pl-4 border-l border-slate-800">
               <div className="text-right lg:block hidden">
                 <p className="text-xs font-bold text-white leading-none">Hyelzira</p>
-                <p className="text-[10px] text-slate-500">Super Admin</p>
+                <p className="text-[10px] text-slate-500">Head Admin</p>
               </div>
               <div className="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30"></div>
             </div>
