@@ -59,7 +59,7 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
             <h4 className="font-bold text-sm text-white">{user.name}</h4>
             <p className="text-[10px] text-slate-500 mb-4">{user.phone}</p>
             <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 bg-emerald-400/5 w-fit px-2 py-1 rounded border border-emerald-400/10">
-              <ShieldCheck size={10} /> KYC {user.kyc}
+              <ShieldCheck size={10} /> ENROLLED {user.kyc}
             </div>
           </div>
         ))}
