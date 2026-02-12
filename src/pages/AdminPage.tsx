@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiLock, FiMenu, FiLogOut, FiSearch, FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 import { LayoutDashboard, ShieldCheck, Database, Users as UsersIcon, User as UserIcon, ArrowLeft, Bell, Settings } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -16,7 +16,6 @@ const accessData = [
    1. Sub-Component: LogPage
 ------------------------------ */
 const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: string }) => {
-  const [setSelectedUser] = useState<any | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const allUsers = Array.from({ length: 16 }).map((_, i) => ({
@@ -25,11 +24,7 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
     kyc: i % 3 === 0 ? "Verified" : "Pending",
     nin: `23489012${i}x`,
     phone: `+234 803 000 ${10 + i}`,
-    country: "Nigeria",
     role: i === 0 ? "Admin" : "Member",
-    status: i % 4 === 0 ? "Active Now" : "1 hour ago",
-    bio: "Strategic team player specialized in operational logistics and group coordination.",
-    loginCount: Math.floor(Math.random() * 100) + 1,
   }));
 
   const filteredUsers = allUsers.filter(user =>
@@ -39,7 +34,6 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
 
   return (
     <div className="animate-in fade-in duration-500 relative">
-      {/* --- ADD USER MODAL --- */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-[#0f111a]/80 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
@@ -53,57 +47,33 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
                 <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Full Name</label>
                 <input type="text" placeholder="John Doe" className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" />
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Role</label>
-                  <select className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all">
-                    <option>Member</option>
-                    <option>Admin</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Phone</label>
-                  <input type="text" placeholder="+234..." className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" />
-                </div>
-              </div>
               <div className="pt-4 flex gap-3">
                 <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-bold text-slate-400 hover:bg-slate-800 transition-all">Cancel</button>
-                <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-900/20 transition-all">Create Account</button>
+                <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-lg transition-all">Create Account</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* --- HEADER SECTION --- */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
         <div>
           <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">System Logs & Monitoring</h3>
-          <p className="text-[10px] text-slate-500 mt-1">Manage user access and authorization requests</p>
         </div>
-        
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={() => setIsAddModalOpen(true)} className="flex items-center gap-2 text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg transition-all shadow-lg shadow-blue-900/20">
+          <button onClick={() => setIsAddModalOpen(true)} className="flex items-center gap-2 text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg transition-all shadow-lg">
             <UsersIcon size={14} /> Add User
           </button>
-          <button className="flex items-center gap-2 text-[11px] font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/20 px-3 py-2 rounded-lg transition-all">
-            <ShieldCheck size={14} /> Pending Requests
-          </button>
-          <button className="flex items-center gap-2 text-[11px] font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 border border-rose-500/20 px-3 py-2 rounded-lg transition-all">
-            <FiLogOut size={14} /> Remove User
-          </button>
-          <div className="w-px h-6 bg-slate-800 mx-1 hidden sm:block" />
           <button onClick={onBack} className="flex items-center gap-2 text-[11px] bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg border border-slate-700 transition-all">
             <ArrowLeft size={14} /> Back to Overview
           </button>
         </div>
       </div>
 
-      {/* --- USER GRID --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {filteredUsers.map((user) => (
-          <div key={user.id} onClick={() => setSelectedUser(user)} className="group cursor-pointer bg-[#161925] border border-slate-800 p-5 rounded-xl hover:border-blue-500/50 transition-all">
-            <div className="flex justify-between items-start mb-3">
+          <div key={user.id} className="group cursor-pointer bg-[#161925] border border-slate-800 p-5 rounded-xl hover:border-blue-500/50 transition-all">
+             <div className="flex justify-between items-start mb-3">
               <div className="p-2 bg-slate-800 rounded-lg group-hover:bg-blue-600 transition-colors">
                 <UserIcon size={15} className="text-slate-300" />
               </div>
@@ -113,9 +83,6 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
             </div>
             <h4 className="font-bold text-sm text-white">{user.name}</h4>
             <p className="text-[10px] text-slate-500 mb-4">{user.phone}</p>
-            <div className="flex items-center gap-2 text-[10px] font-bold text-emerald-400 bg-emerald-400/5 w-fit px-2 py-1 rounded border border-emerald-400/10">
-              <ShieldCheck size={10} /> ENROLLED {user.kyc}
-            </div>
           </div>
         ))}
       </div>
@@ -124,47 +91,193 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
 };
 
 /* -----------------------------
-   2. Main Component: AdminPage
+   2. Sub-Component: SettingsPage
+------------------------------ */
+interface SettingsProps {
+  avatar: string | null;
+  setAvatar: (val: string | null) => void;
+  adminName: string;
+  setAdminName: (val: string) => void;
+  adminEmail: string;
+  setAdminEmail: (val: string) => void;
+}
+
+const SettingsPage = ({ avatar, setAvatar, adminName, setAdminName, adminEmail, setAdminEmail }: SettingsProps) => {
+  const [is2FAEnabled, setIs2FAEnabled] = useState(() => {
+    return JSON.parse(localStorage.getItem("admin_2fa") || "false");
+  });
+  const [isMaintenanceMode, setIsMaintenanceMode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setAvatar(base64String);
+        localStorage.setItem("admin_avatar", base64String);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSaveAll = () => {
+    setIsSaving(true);
+    setTimeout(() => {
+      localStorage.setItem("admin_name", adminName);
+      localStorage.setItem("admin_email", adminEmail);
+      localStorage.setItem("admin_2fa", JSON.stringify(is2FAEnabled));
+      setIsSaving(false);
+      alert("Changes saved successfully!");
+    }, 600);
+  };
+
+  return (
+    <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
+      {/* PROFILE SECTION */}
+      <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-slate-800 bg-slate-800/20">
+          <h3 className="text-white font-bold flex items-center gap-2">
+            <UserIcon size={18} className="text-blue-500" /> Admin Profile
+          </h3>
+        </div>
+        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex items-center gap-6 col-span-full mb-4">
+            <div className="w-20 h-20 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center overflow-hidden transition-all hover:border-blue-500">
+              {avatar ? (
+                <img src={avatar} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <span className="text-blue-500 text-2xl font-bold">{adminName.charAt(0)}</span>
+              )}
+            </div>
+            <div className="space-y-3">
+              <div className="flex flex-wrap gap-2">
+                <input type="file" id="avatarInput" accept="image/*" className="hidden" onChange={handleImageChange} />
+                <label htmlFor="avatarInput" className="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white text-xs px-4 py-2 rounded-lg font-bold transition-all shadow-lg">
+                  Change Avatar
+                </label>
+                {avatar && (
+                   <button onClick={() => { setAvatar(null); localStorage.removeItem("admin_avatar"); }} className="bg-slate-800 hover:text-rose-500 text-slate-400 text-xs px-4 py-2 rounded-lg font-bold transition-all border border-slate-700">
+                     Reset
+                   </button>
+                )}
+              </div>
+            </div>
+          </div>
+          <div>
+            <label className="text-[10px] uppercase text-slate-500 font-bold mb-2 block">Display Name</label>
+            <input 
+              type="text" 
+              value={adminName} 
+              onChange={(e) => setAdminName(e.target.value)} 
+              className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" 
+            />
+          </div>
+          <div>
+            <label className="text-[10px] uppercase text-slate-500 font-bold mb-2 block">Email Address</label>
+            <input 
+              type="email" 
+              value={adminEmail} 
+              onChange={(e) => setAdminEmail(e.target.value)}
+              className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" 
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* SECURITY SECTION */}
+      <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-slate-800 bg-slate-800/20">
+          <h3 className="text-white font-bold flex items-center gap-2">
+            <ShieldCheck size={18} className="text-emerald-500" /> Security & Access
+          </h3>
+        </div>
+        <div className="p-6 space-y-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h4 className="text-sm font-bold text-slate-300">Two-Factor Authentication</h4>
+              <p className="text-[10px] text-slate-500">Add an extra layer of security to your account</p>
+            </div>
+            <button 
+              onClick={() => setIs2FAEnabled(!is2FAEnabled)}
+              className={`w-12 h-6 rounded-full relative transition-all duration-300 border ${
+                is2FAEnabled ? 'bg-emerald-500/20 border-emerald-500/50' : 'bg-slate-800 border-slate-700'
+              }`}
+            >
+              <div className={`absolute top-1 w-4 h-4 rounded-full transition-all duration-300 ${
+                is2FAEnabled ? 'right-1 bg-emerald-500' : 'left-1 bg-slate-500'
+              }`}></div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* SYSTEM PREFERENCES */}
+      <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
+        <div className="p-6 border-b border-slate-800 bg-slate-800/20">
+          <h3 className="text-white font-bold flex items-center gap-2">
+            <Settings size={18} className="text-amber-500" /> System Preferences
+          </h3>
+        </div>
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h4 className="text-sm font-bold text-slate-300">Maintenance Mode</h4>
+              <p className="text-[10px] text-slate-500">Disable public access during updates</p>
+            </div>
+            <button 
+              onClick={() => setIsMaintenanceMode(!isMaintenanceMode)}
+              className={`w-12 h-6 rounded-full relative transition-all duration-300 border ${isMaintenanceMode ? 'bg-rose-500/20 border-rose-500/50' : 'bg-slate-800 border-slate-700'}`}
+            >
+              <div className={`absolute top-1 w-4 h-4 rounded-full transition-all duration-300 ${isMaintenanceMode ? 'right-1 bg-rose-500' : 'left-1 bg-slate-500'}`}></div>
+            </button>
+          </div>
+          <button 
+            onClick={handleSaveAll}
+            disabled={isSaving}
+            className={`w-full ${isSaving ? 'bg-blue-800' : 'bg-blue-600 hover:bg-blue-500'} text-white py-3 rounded-xl font-bold shadow-lg transition-all flex items-center justify-center gap-2`}
+          >
+            {isSaving ? "Saving Changes..." : "Save All Settings"}
+          </button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+/* -----------------------------
+   3. Main Component: AdminPage
 ------------------------------ */
 const AdminPage = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [, setError] = useState("");
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  
+  // GLOBAL ADMIN STATES
+  const [avatar, setAvatar] = useState<string | null>(null);
+  const [adminName, setAdminName] = useState("Hyelzira");
+  const [adminEmail, setAdminEmail] = useState("admin@globalflame.com");
+
+  // Load from Storage
+  useEffect(() => {
+    const savedAvatar = localStorage.getItem("admin_avatar");
+    const savedName = localStorage.getItem("admin_name");
+    const savedEmail = localStorage.getItem("admin_email");
+    if (savedAvatar) setAvatar(savedAvatar);
+    if (savedName) setAdminName(savedName);
+    if (savedEmail) setAdminEmail(savedEmail);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (username === "hyelzira" && password === "zira321") {
       setIsAuthenticated(true);
-      setError("");
-    } else {
-      setError("Invalid credentials");
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0f111a] px-4 font-sans">
-        <form onSubmit={handleLogin} className="bg-[#212535] p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
-          <div className="flex flex-col items-center mb-8">
-            <div className="bg-blue-500 p-4 rounded-2xl mb-3 shadow-lg shadow-blue-800/20">
-              <FiLock className="text-1xl text-white" />
-            </div>
-            <h1 className="text-gray-400 text-2xl font-medium">Secured Access</h1>
-            <p className="text-slate-300 text-sm">Global Youth Management Terminal</p>
-          </div>
-          <div className="space-y-5">
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white focus:border-blue-500 transition-all outline-none" placeholder="Username" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-3 py-2 text-white focus:border-blue-500 transition-all outline-none" placeholder="Password" />
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-xl font-bold shadow-lg shadow-blue-900/20 transition-all">Sign In</button>
-          </div>
-        </form>
-      </div>
-    );
-  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -177,17 +290,9 @@ const AdminPage = () => {
               <StatCard label="User Base" value="4,947" trend="+28%" up={true} />
               <StatCard label="System Latency" value="36ms" trend="-13%" up={false} />
             </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 bg-[#161925] border border-slate-800 rounded-2xl p-6 shadow-sm">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">Access Trends</h3>
-                  <div className="flex gap-2">
-                    <span className="w-3 h-3 bg-blue-500 rounded-full"></span>
-                    <span className="text-[10px] text-slate-500 font-bold uppercase">Daily Visits</span>
-                  </div>
-                </div>
-                <div className="h-72">
+                 <div className="h-72">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={accessData}>
                       <defs>
@@ -205,20 +310,12 @@ const AdminPage = () => {
                   </ResponsiveContainer>
                 </div>
               </div>
-
               <div className="bg-[#161925] border border-slate-800 rounded-2xl p-6">
                 <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-6">System Health</h3>
                 <div className="space-y-6">
                   <MonitorBar label="CPU Usage" percent={42} />
                   <MonitorBar label="Memory" percent={68} />
                   <MonitorBar label="Database" percent={15} />
-                  <hr className="border-slate-800" />
-                  <h4 className="text-[10px] font-bold text-slate-500 uppercase mb-4">Live Activity</h4>
-                  <div className="space-y-4">
-                    <ActivityLog text="New security patch applied" time="2m ago" />
-                    <ActivityLog text="Database optimization complete" time="15m ago" />
-                    <ActivityLog text="Backup scheduled for 02:00" time="1h ago" />
-                  </div>
                 </div>
               </div>
             </div>
@@ -226,24 +323,51 @@ const AdminPage = () => {
         );
       case "Users": return <UserPage />;
       case "Logs": return <LogPage searchQuery={searchQuery} onBack={() => setActiveTab("Dashboard")} />;
+      case "Settings": return (
+        <SettingsPage 
+          avatar={avatar} setAvatar={setAvatar} 
+          adminName={adminName} setAdminName={setAdminName}
+          adminEmail={adminEmail} setAdminEmail={setAdminEmail}
+        />
+      );
       default: return <PlaceholderPage title={activeTab} />;
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#0f111a] px-4">
+        <form onSubmit={handleLogin} className="bg-[#212535] p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
+          <div className="flex flex-col items-center mb-8">
+            <div className="bg-blue-500 p-4 rounded-2xl mb-3 shadow-lg shadow-blue-800/20">
+              <FiLock className="text-xl text-white" />
+            </div>
+            <h1 className="text-gray-400 text-2xl font-medium">Secured Access</h1>
+          </div>
+          <div className="space-y-5">
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white outline-none" placeholder="Username" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white outline-none" placeholder="Password" />
+            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-800 text-white py-3 rounded-xl font-bold transition-all">Sign In</button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen bg-[#0f111a] text-slate-200 flex overflow-hidden font-sans">
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#161925] border-r border-slate-800 p-6 transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} flex flex-col`}>
-        <div className="flex items-center gap-3 mb-10">
-          <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center shadow-lg shadow-blue-900/20">
-            <ShieldCheck size={15} className="text-white" />
+        <div className="flex items-center gap-3 mb-10 px-4">
+          <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center shadow-lg">
+            <ShieldCheck size={14} className="text-white" />
           </div>
-          <span className="font-bold tracking-tight text-white uppercase text-sm">Core Admin</span>
+          <span className="font-bold tracking-tight text-white uppercase text-xs">Core Admin</span>
         </div>
         <nav className="space-y-1 flex-1">
           <SidebarItem icon={<LayoutDashboard size={15} />} label="Overview" active={activeTab === "Dashboard"} onClick={() => {setActiveTab("Dashboard"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<UsersIcon size={15} />} label="Directory" active={activeTab === "Users"} onClick={() => {setActiveTab("Users"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<Database size={15} />} label="System Logs" active={activeTab === "Logs"} onClick={() => {setActiveTab("Logs"); setIsSidebarOpen(false);}} />
-          <SidebarItem icon={<Settings size={15} />} label="Settings" active={activeTab === "Settings"} onClick={() => setActiveTab("Settings")} />
+          <SidebarItem icon={<Settings size={15} />} label="Settings" active={activeTab === "Settings"} onClick={() => {setActiveTab("Settings"); setIsSidebarOpen(false);}} />
         </nav>
         <button onClick={() => setIsAuthenticated(false)} className="mt-auto flex items-center gap-3 text-slate-500 hover:text-white transition-colors pb-2 px-4">
           <FiLogOut /> <span className="text-sm font-medium">Logout</span>
@@ -253,7 +377,6 @@ const AdminPage = () => {
       <main className="flex-1 overflow-y-auto">
         <header className="sticky top-0 z-40 bg-[#0f111a]/80 backdrop-blur-md border-b border-slate-800 h-16 flex items-center justify-between px-8">
           <div className="lg:block hidden">
-            <p className="text-slate-500 text-[10px] font-bold uppercase tracking-widest leading-none">Management Console</p>
             <h2 className="text-lg font-bold text-white">{activeTab}</h2>
           </div>
           <button className="lg:hidden p-2 bg-slate-800 rounded-lg" onClick={() => setIsSidebarOpen(true)}>
@@ -262,15 +385,21 @@ const AdminPage = () => {
           <div className="flex items-center gap-6">
             <div className="relative lg:block hidden">
               <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
-              <input type="text" placeholder="Search system..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-slate-900 border border-slate-800 rounded-full py-1.5 pl-10 pr-4 text-xs focus:ring-1 ring-blue-500 transition-all outline-none w-48" />
+              <input type="text" placeholder="Search system..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-slate-900 border border-slate-800 rounded-full py-1.5 pl-10 pr-4 text-xs focus:ring-1 ring-blue-500 outline-none w-48" />
             </div>
-            <Bell size={18} className="text-slate-500 cursor-pointer hover:text-white transition-colors" />
+            <Bell size={18} className="text-slate-500 cursor-pointer hover:text-white" />
             <div className="flex items-center gap-3 pl-4 border-l border-slate-800">
               <div className="text-right lg:block hidden">
-                <p className="text-xs font-bold text-white leading-none">Hyelzira</p>
+                <p className="text-xs font-bold text-white">{adminName}</p>
                 <p className="text-[10px] text-slate-500">Head Admin</p>
               </div>
-              <div className="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30"></div>
+              <div className="w-8 h-8 rounded-full bg-blue-600/20 border border-blue-500/30 overflow-hidden flex items-center justify-center">
+                {avatar ? (
+                    <img src={avatar} alt="Admin" className="w-full h-full object-cover" />
+                ) : (
+                    <span className="text-blue-500 text-[10px] font-bold">{adminName.charAt(0)}</span>
+                )}
+              </div>
             </div>
           </div>
         </header>
@@ -283,7 +412,7 @@ const AdminPage = () => {
   );
 };
 
-/* --- Refined Reusable Components --- */
+/* --- Reusable Components --- */
 const SidebarItem = ({ icon, label, active, onClick }: any) => (
   <div onClick={onClick} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-slate-500 hover:bg-slate-800/50 hover:text-slate-200"}`}>
     {icon}
@@ -315,21 +444,10 @@ const MonitorBar = ({ label, percent }: any) => (
   </div>
 );
 
-const ActivityLog = ({ text, time }: any) => (
-  <div className="flex items-start gap-3">
-    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1" />
-    <div className="flex-1">
-      <p className="text-[11px] text-slate-300 leading-none">{text}</p>
-      <span className="text-[9px] text-slate-500 uppercase">{time}</span>
-    </div>
-  </div>
-);
-
 const PlaceholderPage = ({ title }: any) => (
   <div className="h-64 bg-[#161925] rounded-2xl flex flex-col items-center justify-center text-center border border-dashed border-slate-800">
-    <Settings size={40} className="text-slate-700 mb-4 animate-spin-slow" />
+    <Settings size={40} className="text-slate-700 mb-4 animate-spin" />
     <h3 className="font-bold text-xl text-white">{title}</h3>
-    <p className="text-sm text-slate-500">Security configuration required for this module.</p>
   </div>
 );
 
