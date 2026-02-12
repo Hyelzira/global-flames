@@ -296,7 +296,7 @@ const AboutPage: FC = () => {
                     <div className="order-1 md:order-2">
                         {/* Main Mission Image */}
                         <ImageWithFallback
-                            src={'/images/deliver.jpg'} 
+                            src={'./assets/deliver.jpg'} 
                             alt="Youth engaging in mission"
                             className="w-full h-auto rounded-3xl shadow-2xl border-4 border-fuchsia-400"
                             fallback={`${ASSET_PATH}default-mission.jpg`}
