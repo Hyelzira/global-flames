@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import type { FC } from 'react';
-import {
-    Quote, 
-    Star, 
-    Users, 
-    MessageSquare, 
-    CheckCircle, 
-    X, 
-    ThumbsUp,
-    Zap, 
-    MapPin,
-    Mail,
-    Phone,
+import { Quote,  Star,  Users,  MessageSquare,  CheckCircle,   X,  ThumbsUp, Zap,  MapPin,Mail, Phone,
 } from 'lucide-react';
 
-// --- PLACEHOLDER COMPONENTS (Unchanged) ---
 
 // Helper component for displaying star ratings (STATIC)
 const Rating: FC<{ count: number }> = ({ count }) => (
@@ -119,10 +107,10 @@ const ReviewSubmissionModal: FC<ReviewModalProps> = ({ isOpen, onClose }) => {
 
                 {isSubmitted ? (
                     // Success State - More vibrant and quick
-                    <div className="p-12 text-center bg-linear-to-br from-emerald-500 to-teal-600 text-white rounded-b-2xl">
-                        <ThumbsUp className="w-20 h-20 text-white mx-auto mb-4 animate-bounce" />
-                        <h3 className="text-4xl font-extrabold mb-2">Success!</h3>
-                        <p className="text-lg font-light">Your testimony shines brighter than ever. Thank you for your impact!</p>
+                    <div className="p-12 text-center bg-linear-to-br from-emerald-500 to-teal-600 text-white rounded-b-1xl">
+                        <ThumbsUp className="w-10 h-10 text-white mx-auto mb-2 animate-bounce" />
+                        <h3 className="text-3xl font-extrabold mb-2">Success!</h3>
+                        <p className="text-sm font-light">Your testimony shines brighter than ever. Thank you for your impact!</p>
                     </div>
                 ) : (
                     // Initial Form State - Split layout
@@ -136,13 +124,13 @@ const ReviewSubmissionModal: FC<ReviewModalProps> = ({ isOpen, onClose }) => {
                             </p>
                             <div className="mt-8">
                                 <Rating count={5} />
-                                <p className="text-xs mt-2 text-fuchsia-200">Trusted by thousands.</p>
+                                <p className="text-xs mt-2 text-fuchsia-200">Trusted by millions.</p>
                             </div>
                         </div>
 
                         {/* Right Side: The Form */}
-                        <div className="p-8 md:p-10">
-                            <h3 className="text-3xl font-extrabold text-purple-900 mb-1">Share Your Impact</h3>
+                        <div className="p-8 md:p-8">
+                            <h3 className="text-3xl font-bold text-purple-900 mb-1">Share Your Impact</h3>
                             <p className="text-gray-500 mb-6 text-sm">
                                 Please provide an honest review of your GFM experience.
                             </p>
@@ -151,7 +139,7 @@ const ReviewSubmissionModal: FC<ReviewModalProps> = ({ isOpen, onClose }) => {
                                 {/* Rating Input Field */}
                                 <div>
                                     <label className="block text-sm font-semibold text-gray-700 mb-2">1. Rate Your Experience</label>
-                                    <div className="p-3 bg-fuchsia-50 rounded-lg border border-fuchsia-100 inline-block">
+                                    <div className="p-3 bg-fuchsia-50 rounded-sm border border-fuchsia-100 inline-block">
                                         <StarRatingInput value={rating} onChange={setRating} />
                                     </div>
                                     <input type="hidden" name="rating" value={rating} />
@@ -166,7 +154,7 @@ const ReviewSubmissionModal: FC<ReviewModalProps> = ({ isOpen, onClose }) => {
                                         className="w-full border border-gray-300 p-3 rounded-xl focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 transition-all duration-200" 
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        placeholder="E.g., A dedicated Alumna"
+                                        placeholder="E.g., Harusaki"
                                     />
                                 </div>
                                 
@@ -187,8 +175,8 @@ const ReviewSubmissionModal: FC<ReviewModalProps> = ({ isOpen, onClose }) => {
                                 {/* Submission Button */}
                                 <button 
                                     type="submit" 
-                                    className="w-full py-3 bg-purple-700 text-white font-extrabold rounded-xl shadow-lg hover:bg-purple-800 transition-colors uppercase tracking-widest mt-6 
-                                               transform hover:scale-[1.01] active:scale-95 duration-200"
+                                    className="w-full py-3 bg-purple-700 text-white font-extrabold rounded-xl shadow-lg hover:bg-purple-800 transition-colors uppercase tracking-widest mt-4
+                                               transform hover:scale-[1.01] active:scale-90 duration-200"
                                 >
                                     Submit & Ignite the Flame
                                 </button>

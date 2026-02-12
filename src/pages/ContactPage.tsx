@@ -53,8 +53,8 @@ const CONTACT_INFO = [
 ];
 
 const SOCIAL_LINKS = [
-    { icon: Instagram, name: 'Instagram', url: '#', color: 'text-pink-600' },
-    { icon: Facebook, name: 'Facebook', url: '#', color: 'text-blue-600' },
+    { icon: Instagram, name: 'Instagram', url: 'https://www.instagram.com/gfmyouth_community?igsh=MTVmbHI6cnplemc1dQ==', color: 'text-pink-600' },
+    { icon: Facebook, name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61584181224696', color: 'text-blue-600' },
     { icon: Twitter, name: 'X (Twitter)', url: '#', color: 'text-blue-400' },
 ];
 

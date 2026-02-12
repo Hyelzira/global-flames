@@ -343,7 +343,7 @@ const AboutPage: FC = () => {
                     <h2 className="text-2xl font-sm mb-6 text-gray-900">OUR MOTTO: Raising a people of power who will manifest the kingdom and the realities of the fullness
                         of Christ through the Holy Spirit. </h2>
                     <p className="text-gray-700 max-w-3xl mx-auto text-lg leading-relaxed mb-12">
-                        MISSION:: Immense salvation of souls, equipping the saints and manifesting the kingdom
+                        MISSION: Immense salvation of souls, equipping the saints and manifesting the kingdom
                         through the demonstration of the Holy Spirit Power.
                     </p>
                     <h2 className="text-5xl font-bold mb-10 text-gray-950">CORE VALUES</h2>
