@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FiLock, FiMenu, FiLogOut, FiSearch, FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
+import { FiMenu, FiLogOut, FiSearch, FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 import { LayoutDashboard, ShieldCheck, Database, Users as UsersIcon, User as UserIcon, ArrowLeft, Bell, Settings } from "lucide-react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import UserPage from "./UserPage";
@@ -135,7 +135,6 @@ const SettingsPage = ({ avatar, setAvatar, adminName, setAdminName, adminEmail, 
 
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
-      {/* PROFILE SECTION */}
       <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
         <div className="p-6 border-b border-slate-800 bg-slate-800/20">
           <h3 className="text-white font-bold flex items-center gap-2">
@@ -186,7 +185,6 @@ const SettingsPage = ({ avatar, setAvatar, adminName, setAdminName, adminEmail, 
         </div>
       </section>
 
-      {/* SECURITY SECTION */}
       <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
         <div className="p-6 border-b border-slate-800 bg-slate-800/20">
           <h3 className="text-white font-bold flex items-center gap-2">
@@ -213,7 +211,6 @@ const SettingsPage = ({ avatar, setAvatar, adminName, setAdminName, adminEmail, 
         </div>
       </section>
 
-      {/* SYSTEM PREFERENCES */}
       <section className="bg-[#161925] border border-slate-800 rounded-2xl overflow-hidden">
         <div className="p-6 border-b border-slate-800 bg-slate-800/20">
           <h3 className="text-white font-bold flex items-center gap-2">
@@ -250,9 +247,6 @@ const SettingsPage = ({ avatar, setAvatar, adminName, setAdminName, adminEmail, 
    3. Main Component: AdminPage
 ------------------------------ */
 const AdminPage = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [activeTab, setActiveTab] = useState("Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -271,13 +265,6 @@ const AdminPage = () => {
     if (savedName) setAdminName(savedName);
     if (savedEmail) setAdminEmail(savedEmail);
   }, []);
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username === "hyelzira" && password === "zira321") {
-      setIsAuthenticated(true);
-    }
-  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -334,26 +321,6 @@ const AdminPage = () => {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0f111a] px-4">
-        <form onSubmit={handleLogin} className="bg-[#212535] p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-800">
-          <div className="flex flex-col items-center mb-8">
-            <div className="bg-blue-500 p-4 rounded-2xl mb-3 shadow-lg shadow-blue-800/20">
-              <FiLock className="text-xl text-white" />
-            </div>
-            <h1 className="text-gray-400 text-2xl font-medium">Secured Access</h1>
-          </div>
-          <div className="space-y-5">
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white outline-none" placeholder="Username" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-3 text-white outline-none" placeholder="Password" />
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-800 text-white py-3 rounded-xl font-bold transition-all">Sign In</button>
-          </div>
-        </form>
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen bg-[#0f111a] text-slate-200 flex overflow-hidden font-sans">
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#161925] border-r border-slate-800 p-6 transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} flex flex-col`}>
@@ -369,7 +336,8 @@ const AdminPage = () => {
           <SidebarItem icon={<Database size={15} />} label="System Logs" active={activeTab === "Logs"} onClick={() => {setActiveTab("Logs"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<Settings size={15} />} label="Settings" active={activeTab === "Settings"} onClick={() => {setActiveTab("Settings"); setIsSidebarOpen(false);}} />
         </nav>
-        <button onClick={() => setIsAuthenticated(false)} className="mt-auto flex items-center gap-3 text-slate-500 hover:text-white transition-colors pb-2 px-4">
+        {/* Updated to redirect to your custom login page */}
+        <button onClick={() => window.location.href = '/login'} className="mt-auto flex items-center gap-3 text-slate-500 hover:text-white transition-colors pb-2 px-4">
           <FiLogOut /> <span className="text-sm font-medium">Logout</span>
         </button>
       </aside>
