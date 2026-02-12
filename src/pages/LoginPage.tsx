@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
-// Ensure the path to your image asset is correct
+import { Link, useNavigate } from "react-router-dom";
 import loginImage from "../assets/images/HOO.jpg";
 
 interface LoginFormData {
@@ -10,7 +9,6 @@ interface LoginFormData {
 }
 
 const LoginPage: React.FC = () => {
-  // Initialize the navigate function
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState<LoginFormData>({
@@ -24,7 +22,6 @@ const LoginPage: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
@@ -32,17 +29,20 @@ const LoginPage: React.FC = () => {
   };
 
   const validateForm = (): boolean => {
+    // Basic check for empty fields
     if (!formData.identifier.trim()) {
       setError("Email or username is required.");
       return false;
     }
-
     if (!formData.password.trim()) {
       setError("Password is required.");
       return false;
     }
 
-    if (formData.password.length < 8) {
+    // ADMIN BYPASS: If it's the admin login, skip the 8-character rule
+    const isAdmin = formData.identifier === "hyelzira" && formData.password === "zira321";
+    
+    if (!isAdmin && formData.password.length < 8) {
       setError("Password must be at least 8 characters.");
       return false;
     }
@@ -57,16 +57,22 @@ const LoginPage: React.FC = () => {
 
     setLoading(true);
     try {
-      console.log("Login data:", formData);
-      
-      // Simulate API call (e.g., waiting for server response)
+      // 1. ADMIN CHECK
+      if (formData.identifier === "hyelzira" && formData.password === "zira321") {
+        console.log("Admin routing triggered...");
+        await new Promise((resolve) => setTimeout(resolve, 1000)); // Brief delay for feel
+        setLoading(false);
+        navigate("/admin"); // Change this to your actual admin route
+        return; 
+      }
+
+      // 2. MEMBER CHECK (Simulated API call)
+      console.log("Member login attempt:", formData.identifier);
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       setLoading(false);
-
-      navigate("/"); 
-      // REDIRECTION LOGIC END
-
+      navigate("/"); // Takes members to homepage
+      
     } catch (err: any) {
       setError(err.message || "Login failed. Please try again.");
       setLoading(false);
@@ -95,7 +101,7 @@ const LoginPage: React.FC = () => {
               Login
             </h1>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Please enter your mobile number or email address and we will send you a code to log in or create an account.
+              Please enter your mobile number or email address to access your account.
             </p>
           </div>
 
@@ -113,8 +119,8 @@ const LoginPage: React.FC = () => {
                 id="identifier"
                 value={formData.identifier}
                 onChange={handleChange}
-                placeholder="Email or Username"
-                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                placeholder="Email or Admin Username"
+                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-500 outline-none transition-all"
               />
               
               <input
@@ -124,7 +130,7 @@ const LoginPage: React.FC = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                className="block w-full rounded border border-gray-300 px-4 py-4 text-gray-900 placeholder-gray-400 focus:border-fuchsia-500 focus:ring-1 focus:ring-fuchsia-500 outline-none transition-all"
               />
 
               <div className="flex items-center justify-between py-2">
@@ -134,11 +140,11 @@ const LoginPage: React.FC = () => {
                     name="rememberMe"
                     checked={formData.rememberMe}
                     onChange={handleChange}
-                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                    className="rounded border-gray-300 text-fuchsia-600 focus:ring-fuchsia-500"
                   />
                   <span>Remember me</span>
                 </label>
-                <Link to="/forgot-password" size-xs className="text-xs font-bold tracking-widest text-blue-600 uppercase hover:underline">
+                <Link to="/forgot-password" size-xs className="text-xs font-bold tracking-widest text-fuchsia-600 uppercase hover:underline">
                   Use Crypted code Instead
                 </Link>
               </div>
@@ -147,7 +153,7 @@ const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`inline-flex items-center justify-center rounded bg-fuchsia-600 px-10 py-3 text-sm font-bold text-white shadow-sm transition-all uppercase hover:bg-fuchsia-500 focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 ${
+              className={`w-full inline-flex items-center justify-center rounded bg-fuchsia-600 px-10 py-4 text-sm font-bold text-white shadow-sm transition-all uppercase hover:bg-fuchsia-500 focus:ring-2 focus:ring-fuchsia-500 focus:ring-offset-2 ${
                 loading ? "opacity-70 cursor-not-allowed" : "opacity-100"
               }`}
             >
@@ -158,7 +164,7 @@ const LoginPage: React.FC = () => {
           <div className="bg-gray-50 p-4 rounded mt-8">
             <p className="text-xs text-gray-600">
               By continuing, you agree to our{" "}
-              <Link to="/terms" className="text-blue-600 hover:underline">
+              <Link to="/terms" className="text-fuchsia-600 hover:underline">
                 Terms of Use
               </Link>
             </p>

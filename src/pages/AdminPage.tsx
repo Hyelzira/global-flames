@@ -13,10 +13,11 @@ const accessData = [
 ];
 
 /* -----------------------------
-   1. Sub-Component: LogPage (Retained & Styled)
+   1. Sub-Component: LogPage
 ------------------------------ */
 const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: string }) => {
-  const [ setSelectedUser] = useState<any | null>(null);
+  const [setSelectedUser] = useState<any | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const allUsers = Array.from({ length: 16 }).map((_, i) => ({
     id: i + 1,
@@ -37,14 +38,68 @@ const LogPage = ({ onBack, searchQuery }: { onBack: () => void; searchQuery: str
   );
 
   return (
-    <div className="animate-in fade-in duration-500">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">System Logs & Monitoring</h3>
-        <button onClick={onBack} className="flex items-center gap-2 text-xs bg-slate-800 hover:bg-slate-700 px-4 py-2 rounded-lg border border-slate-700 transition-all">
-          <ArrowLeft size={14} /> Back to Overview
-        </button>
+    <div className="animate-in fade-in duration-500 relative">
+      {/* --- ADD USER MODAL --- */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-[#0f111a]/80 backdrop-blur-sm" onClick={() => setIsAddModalOpen(false)} />
+          <div className="bg-[#161925] border border-slate-800 w-full max-w-md rounded-2xl shadow-2xl z-10 overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-slate-800 flex justify-between items-center">
+              <h3 className="text-white font-bold">Register New System User</h3>
+              <button onClick={() => setIsAddModalOpen(false)} className="text-slate-500 hover:text-white">✕</button>
+            </div>
+            <form className="p-6 space-y-4" onSubmit={(e) => { e.preventDefault(); setIsAddModalOpen(false); }}>
+              <div>
+                <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Full Name</label>
+                <input type="text" placeholder="John Doe" className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Role</label>
+                  <select className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all">
+                    <option>Member</option>
+                    <option>Admin</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase text-slate-500 font-bold mb-1.5 block">Phone</label>
+                  <input type="text" placeholder="+234..." className="w-full bg-[#0f111a] border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:border-blue-500 outline-none transition-all" />
+                </div>
+              </div>
+              <div className="pt-4 flex gap-3">
+                <button type="button" onClick={() => setIsAddModalOpen(false)} className="flex-1 px-4 py-2.5 rounded-xl border border-slate-800 text-sm font-bold text-slate-400 hover:bg-slate-800 transition-all">Cancel</button>
+                <button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-900/20 transition-all">Create Account</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* --- HEADER SECTION --- */}
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-4">
+        <div>
+          <h3 className="text-slate-400 text-sm font-medium uppercase tracking-wider">System Logs & Monitoring</h3>
+          <p className="text-[10px] text-slate-500 mt-1">Manage user access and authorization requests</p>
+        </div>
+        
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => setIsAddModalOpen(true)} className="flex items-center gap-2 text-[11px] font-bold bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-lg transition-all shadow-lg shadow-blue-900/20">
+            <UsersIcon size={14} /> Add User
+          </button>
+          <button className="flex items-center gap-2 text-[11px] font-bold bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 border border-amber-500/20 px-3 py-2 rounded-lg transition-all">
+            <ShieldCheck size={14} /> Pending Requests
+          </button>
+          <button className="flex items-center gap-2 text-[11px] font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 border border-rose-500/20 px-3 py-2 rounded-lg transition-all">
+            <FiLogOut size={14} /> Remove User
+          </button>
+          <div className="w-px h-6 bg-slate-800 mx-1 hidden sm:block" />
+          <button onClick={onBack} className="flex items-center gap-2 text-[11px] bg-slate-800 hover:bg-slate-700 px-3 py-2 rounded-lg border border-slate-700 transition-all">
+            <ArrowLeft size={14} /> Back to Overview
+          </button>
+        </div>
       </div>
 
+      {/* --- USER GRID --- */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {filteredUsers.map((user) => (
           <div key={user.id} onClick={() => setSelectedUser(user)} className="group cursor-pointer bg-[#161925] border border-slate-800 p-5 rounded-xl hover:border-blue-500/50 transition-all">
@@ -116,7 +171,6 @@ const AdminPage = () => {
       case "Dashboard":
         return (
           <div className="space-y-8 animate-in fade-in duration-700">
-            {/* Professional Stats Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <StatCard label="Live Traffic" value="582" trend="+52%" up={true} />
               <StatCard label="Monthly Reach" value="19,284" trend="+48%" up={true} />
@@ -125,7 +179,6 @@ const AdminPage = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Animated Charts Section */}
               <div className="lg:col-span-2 bg-[#161925] border border-slate-800 rounded-2xl p-6 shadow-sm">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider">Access Trends</h3>
@@ -153,7 +206,6 @@ const AdminPage = () => {
                 </div>
               </div>
 
-              {/* Monitoring Section */}
               <div className="bg-[#161925] border border-slate-800 rounded-2xl p-6">
                 <h3 className="text-sm font-medium text-slate-400 uppercase tracking-wider mb-6">System Health</h3>
                 <div className="space-y-6">
@@ -180,7 +232,6 @@ const AdminPage = () => {
 
   return (
     <div className="h-screen bg-[#0f111a] text-slate-200 flex overflow-hidden font-sans">
-      {/* Sidebar */}
       <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-[#161925] border-r border-slate-800 p-6 transition-transform duration-300 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} flex flex-col`}>
         <div className="flex items-center gap-3 mb-10">
           <div className="w-6 h-6 bg-blue-500 rounded flex items-center justify-center shadow-lg shadow-blue-900/20">
@@ -188,20 +239,17 @@ const AdminPage = () => {
           </div>
           <span className="font-bold tracking-tight text-white uppercase text-sm">Core Admin</span>
         </div>
-
         <nav className="space-y-1 flex-1">
           <SidebarItem icon={<LayoutDashboard size={15} />} label="Overview" active={activeTab === "Dashboard"} onClick={() => {setActiveTab("Dashboard"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<UsersIcon size={15} />} label="Directory" active={activeTab === "Users"} onClick={() => {setActiveTab("Users"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<Database size={15} />} label="System Logs" active={activeTab === "Logs"} onClick={() => {setActiveTab("Logs"); setIsSidebarOpen(false);}} />
           <SidebarItem icon={<Settings size={15} />} label="Settings" active={activeTab === "Settings"} onClick={() => setActiveTab("Settings")} />
         </nav>
-
         <button onClick={() => setIsAuthenticated(false)} className="mt-auto flex items-center gap-3 text-slate-500 hover:text-white transition-colors pb-2 px-4">
           <FiLogOut /> <span className="text-sm font-medium">Logout</span>
         </button>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto">
         <header className="sticky top-0 z-40 bg-[#0f111a]/80 backdrop-blur-md border-b border-slate-800 h-16 flex items-center justify-between px-8">
           <div className="lg:block hidden">
@@ -211,7 +259,6 @@ const AdminPage = () => {
           <button className="lg:hidden p-2 bg-slate-800 rounded-lg" onClick={() => setIsSidebarOpen(true)}>
             <FiMenu size={16} />
           </button>
-          ;
           <div className="flex items-center gap-6">
             <div className="relative lg:block hidden">
               <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -227,19 +274,16 @@ const AdminPage = () => {
             </div>
           </div>
         </header>
-
         <div className="p-8">
           {renderContent()}
         </div>
       </main>
-      
       {isSidebarOpen && <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden" onClick={() => setIsSidebarOpen(false)} />}
     </div>
   );
 };
 
 /* --- Refined Reusable Components --- */
-
 const SidebarItem = ({ icon, label, active, onClick }: any) => (
   <div onClick={onClick} className={`flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all ${active ? "bg-blue-600/10 text-blue-400 border border-blue-500/20" : "text-slate-500 hover:bg-slate-800/50 hover:text-slate-200"}`}>
     {icon}
